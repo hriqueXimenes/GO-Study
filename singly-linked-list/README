@@ -1,0 +1,32 @@
+Singly Linked List:
+
+Cada nó tem apenas um ponteiro para o próximo nó. 
+Simples, mas pode ser ineficiente para algumas operações, como remover o último elemento, já que você precisa percorrer toda a lista para encontrar o penúltimo nó.
+
+Quando usar uma linked list:
+Inserção/Remoção frequente em qualquer parte da lista: Se você precisa inserir ou remover elementos frequentemente no início, no meio ou no fim da lista, 
+uma linked list pode ser mais eficiente que um array, já que em um array, essas operações podem exigir o deslocamento de muitos elementos. Em uma linked list, 
+as inserções e remoções são feitas ajustando os ponteiros, o que geralmente é mais rápido.
+
+Tamanho da lista é imprevisível: Se o tamanho da lista é dinâmico e você não sabe quantos elementos terá, uma linked list pode ser vantajosa, 
+pois ela não precisa de uma alocação contínua de memória como um array.
+
+Evitar realocações: Em um array, se você exceder a capacidade alocada, é necessário realocar o array inteiro em um novo espaço de memória. 
+Com uma linked list, cada nó pode estar em uma localização diferente na memória, então isso não é necessário.
+
+Estruturas interligadas: Quando você precisa de uma estrutura interligada, como para criar uma fila (queue) ou uma pilha (stack), uma linked list pode ser uma implementação simples e eficiente.
+
+
+Singly Linked List:
+
+Each node has only one pointer to the next node. Simple, but it can be inefficient for some operations, like removing the last element, since you need to traverse the entire list to find the penultimate node.
+
+When to use a linked list:
+
+Frequent Insertion/Removal anywhere in the list: If you need to frequently insert or remove elements at the beginning, middle, or end of the list, a linked list may be more efficient than an array. In an array, these operations may require shifting many elements. In a linked list, insertions and removals are done by adjusting pointers, which is generally faster.
+
+List size is unpredictable: If the size of the list is dynamic and you don't know how many elements you will have, a linked list can be advantageous since it doesn't require contiguous memory allocation like an array.
+
+Avoid reallocations: In an array, if you exceed the allocated capacity, you need to reallocate the entire array in a new memory space. With a linked list, each node can be in a different location in memory, so this is not necessary.
+
+Interconnected structures: When you need an interconnected structure, such as to create a queue or a stack, a linked list can be a simple and efficient implementation.
