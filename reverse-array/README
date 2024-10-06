@@ -1,0 +1,31 @@
+PT-BR:
+Algoritmo de inversão de array com 3 exemplos diferentes
+
+Neste exemplo, temos dois tipos de funções que criam uma cópia do array, e no último exemplo, fazemos a alteração in-place.
+
+Pontos a considerar no in-place:
+
+Tempo: Menor, pois não há cópia.
+Desempenho: Geralmente mais rápido.
+Dados: Modifica o array original.
+Pontos a considerar ao criar uma cópia:
+
+Uso de memória: Maior, devido à criação da cópia.
+Desempenho: Um pouco mais lento (cópia adicional).
+Dados: Preserva o array original.
+
+EN:
+Array reversal algorithm with 3 different examples
+
+In this example, we have two types of functions that create a copy of the array, and in the last one, we perform the in-place modification.
+
+Points to consider for in-place:
+
+Time: Faster, since no copy is made.
+Performance: Generally quicker.
+Data: Modifies the original array.
+Points to consider when creating a copy:
+
+Memory usage: Higher, due to the creation of the copy.
+Performance: Slightly slower (additional copy step).
+Data: Preserves the original array.
