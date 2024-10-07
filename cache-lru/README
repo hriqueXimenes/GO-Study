@@ -1,0 +1,17 @@
+PT-BR
+
+Algoritmo simples de cache LRU (Least Recently Used), ou seja, quando o cache está cheio, remove a chave menos utilizada.
+
+Evitei o uso de HashTable, embora ela seja ideal para identificar e buscar os nós de forma mais otimizada (O(1)), mas quis forçar o estudo do Doubly Linked List.
+
+Em uma aplicação real, o uso de HashTable em conjunto com o Doubly Linked List seria o mais recomendado.
+
+
+EN
+
+Simple LRU (Least Recently Used) cache algorithm, meaning, when the cache is full, it removes the least used key.
+
+I avoided using a HashTable, even though it is ideal for identifying and searching nodes more efficiently (O(1)), but I wanted to focus on studying the Doubly Linked List.
+
+In a real application, using a HashTable in conjunction with a Doubly Linked List would be most recommended.
+
