@@ -4,128 +4,125 @@ import "fmt"
 
 type Cache struct {
 	head *Node
+	tail *Node
+
+	keys map[string]*Node
 
 	size int
 }
 
 type Node struct {
-	Key   string
-	Value interface{}
+	key   string
+	value interface{}
 
-	Read int
-
-	Previous *Node
-	Next     *Node
+	previous *Node
+	next     *Node
 }
 
 func main() {
 	cache := Cache{
-		size: 2,
+		size: 5,
+		keys: map[string]*Node{},
 	}
 
 	cache.Append("key1", "val1")
-	cache.Get("key1")
-
 	cache.Append("key2", "val2")
-	cache.Append("key3", "val3")
-
 	cache.Append("key3", "val3")
 	cache.Append("key4", "val4")
 	cache.Append("key5", "val5")
 
+	cache.Get("key1")
+	fmt.Println(cache.GetKeys())
+
+	cache.Append("key6", "val6")
 	fmt.Println(cache.GetKeys())
 }
 
-func (c *Cache) Reset() {
-	c.head = nil
-}
-
 func (c *Cache) Append(key, value string) {
-	if c.Get(key) == nil && len(c.GetKeys()) >= c.size {
-		lru := c.GetLRU()
-
+	if c.Get(key) == nil && len(c.keys) >= c.size {
+		lru := c.tail
 		if lru != nil {
-			if lru.Previous != nil {
-				lru.Previous.Next = lru.Next
-			} else {
-				//head
-				c.head = lru.Next
-			}
+			delete(c.keys, lru.key)
 
-			if lru.Next != nil {
-				lru.Next.Previous = lru.Previous
-			} else if lru.Previous != nil {
-				//tail
-				lru.Previous.Next = nil
+			if lru.previous != nil {
+				lru.previous.next = nil
+				c.tail = lru.previous
+			} else {
+				c.head = nil
+				c.tail = nil
 			}
 		}
 	}
 
 	newNode := &Node{
-		Key:   key,
-		Value: value,
+		key:   key,
+		value: value,
 	}
 
 	if c.head == nil {
 		c.head = newNode
-	}
+		c.tail = newNode
 
-	if c.head.Key == key {
-		c.head.Value = value
+		c.keys[key] = newNode
 		return
 	}
 
-	current := c.head
-	for current.Next != nil {
-		if current.Next.Key == key {
-			current.Next.Value = value
-			return
-		}
-		current = current.Next
+	if c.head.key == key {
+		c.head.value = value
+		return
 	}
 
-	newNode.Previous = current
-	current.Next = newNode
+	c.head.previous = newNode
+	newNode.next = c.head
+
+	c.head = newNode
+	c.keys[key] = newNode
+}
+
+func (c *Cache) MoveNodeToHead(node *Node) {
+	//if the list is empty
+	if c.head == nil {
+		return
+	}
+
+	//if we have only 1 element
+	if c.head.next == nil {
+		return
+	}
+
+	//if node is already the head of the list
+	if node.previous == nil {
+		return
+	}
+
+	//if node is the tail
+	if node.next == nil {
+		node.previous.next = nil
+		c.tail = node.previous
+	}
+
+	node.previous = nil
+	node.next = c.head
+	c.head.previous = node
+	c.head = node
 }
 
 func (c *Cache) Get(key string) interface{} {
-	current := c.head
-	for current != nil {
-		if current.Key == key {
-			current.Read++
-			return current.Value
-		}
-		current = current.Next
+	if node, found := c.keys[key]; found {
+		c.MoveNodeToHead(node)
+		return node.value
 	}
 
 	return nil
 }
 
-func (c *Cache) GetLRU() *Node {
-	current := c.head
-
-	minRead := c.head.Read
-	lru := current
-
-	for current.Next != nil {
-
-		current = current.Next
-		if current.Read < minRead {
-			lru = current
-			minRead = current.Read
-		}
-	}
-
-	return lru
-}
-
 func (c *Cache) GetKeys() []string {
 	keys := []string{}
 
-	current := c.head
-	for current != nil {
-		keys = append(keys, current.Key)
-		current = current.Next
+	if c.keys != nil {
+		for key := range c.keys {
+			keys = append(keys, key)
+		}
 	}
 
 	return keys
